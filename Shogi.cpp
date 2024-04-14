@@ -120,20 +120,33 @@ class Shogi
                     inRange = false;
                 }
             } while (!inRange);
-            fixCoor(row, col, moveRow, moveCol);
+            row = fixRow(row);
+            col = fixCol(col);
+            moveRow = fixMoveRow(moveRow);
+            moveCol = fixMoveCol(moveCol);
             while (!canMove(piece, row, col, moveRow, moveCol))
             {
-                cout << "(" <<moveRow << ", " << moveCol << ") is not a valid move. Please enter another coordinate." << endl;
+                cout << "(" << moveRow + 1 << ", " << moveCol + 1 << ") is not a valid move. Please enter another coordinate." << endl;
                 cin >> moveRow >> moveCol;
             }
             printBoard();
         }
-        void fixCoor(int row, int col, int moveRow, int moveCol)
+        int fixRow(int row)
         {
-            row -= 1;
-            col -= 1;
-            moveRow -= 1;
-            moveCol -= 1;
+            return row - 1;
+            
+        }
+        int fixCol(int col)
+        {
+            return col - 1;
+        }
+        int fixMoveRow(int row)
+        {
+            return row - 1;
+        }
+        int fixMoveCol(int col)
+        {
+            return col - 1;
         }
         bool canMove(string piece, int row, int col, int moveRow, int moveCol)
         {
@@ -209,7 +222,7 @@ class Shogi
                     }
                     else if (grid[row][col] == "\x1b[34m P \x1b[0m")
                     {
-                        if (row == moveRow + 1)
+                        if (row == moveRow +  1)
                         {
                             grid[moveRow][moveCol] = "\x1b[34m P \x1b[0m";
                             grid[row][col] = "   ";
